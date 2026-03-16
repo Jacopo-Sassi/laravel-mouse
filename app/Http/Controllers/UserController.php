@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\File;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -170,7 +172,22 @@ class UserController extends Controller
         //senza togliere quelli esistenti ma non presenti nel parametro 
         $user->roles()->syncWithoutDetaching($userRoles);
 
+        //recupero foto profilo da profile-image
+        //$profileImage è un oggetto di tipo UploadedFile
+        $profileImage = $request->file('profile-image');
+        if($profileImage){
+            $storagePath = $profileImage->store();
+            $file = File::create([
+                'original_name' => $profileImage->getClientOriginalName(),
+                'storage_path' => $storagePath,
+            ]);
+            $user->profile_image_id = $file->id;
+        }
+        
+
         $user->save();
+
+
         return redirect('/users');
     }
 
@@ -178,5 +195,15 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect('/users');
+    }
+
+    public function getProfileImage($id){
+        $user = User::find($id);
+        $imagePath = $user->profileImage->storage_path ?? null;
+        //dd($imagePath);
+        if(!$imagePath){
+            $imagePath = 'profile-image-placeholder.jpg';
+        }
+        return Storage::download($imagePath);
     }
 }

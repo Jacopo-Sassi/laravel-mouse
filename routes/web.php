@@ -28,6 +28,6 @@ Route::post('/users/update/{id}', [UserController::class, 'saveUpdate']);
 
 Route::delete('/users/delete/{id}', [UserController::class, 'delete']);
 
-
+Route::get('profile-image/{id}', [UserController::class, 'getProfileImage']);
 
 

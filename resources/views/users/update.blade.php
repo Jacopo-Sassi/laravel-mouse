@@ -1,5 +1,5 @@
 <h1>Aggiorna utente</h1>
-<form method="POST" action="/users/update/{{ $user->id }}">
+<form method="POST" action="/users/update/{{ $user->id }}" enctype="multipart/form-data" >
     @csrf
     <label for="name">Nome</label>
     <input id="name" name="name" type="text" value="{{ $user->name }}" ></input>
@@ -48,6 +48,9 @@
             />
         <label>attivo</label>
     @endforeach
+    <br>
+    <label>Carica immagine di profilo</label>
+    <input type="file" name="profile-image"></input>
 <br>
     <button>Invia</button>
 </form>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\City;
+use App\Models\File;
 use App\Models\Role;
 
 class User extends Authenticatable
@@ -54,5 +55,9 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsToMany(Role::class)->withTimestamps()->withPivot('enabled');
+    }
+
+    public function profileImage(){
+        return $this->belongsTo(File::class, 'profile_image_id');
     }
 }

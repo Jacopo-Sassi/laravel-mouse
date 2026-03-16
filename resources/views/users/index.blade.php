@@ -12,6 +12,7 @@
 <table>
     <thead>
         <tr>
+            <th></th>
             <th>Nome</th>
             <th>Email</th>
             <th>Città</th>
@@ -21,7 +22,9 @@
     <tbody>
         @foreach ($users as $user)
             <tr>
-            
+                <td>
+                    <img src="/profile-image/{{ $user->id }}" style="width:64px;height;64px;" >
+                </td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->city->name ?? 'N.D.'}}</td>

@@ -25,9 +25,9 @@ class TestJob implements ShouldQueue
      */
     public function handle(): void
     {
-        print "inizio job";
+        print "inizio job \n";
         //simuliamo calcoli per 10 secondi
         sleep(10);
-        print "fine job";
+        print "fine job \n";
     }
 }
